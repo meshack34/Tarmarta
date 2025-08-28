@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tamarta Tea Distribution Management System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'home' %}">TTDMS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'role_redirect' %}">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-5 text-center bg-white">
+    <div class="container">
+      <h1 class="fw-bold text-success">Tamarta Tea Distribution</h1>
+      <p class="lead text-muted">Efficiently manage tea stock, sales, and distribution across markets.</p>
+      <div class="mt-4">
+        {% if user.is_authenticated %}
+          <a href="{% url 'role_redirect' %}" class="btn btn-success btn-lg shadow">Go to Dashboard</a>
+        {% else %}
+          <a href="{% url 'register' %}" class="btn btn-success btn-lg shadow me-2">Get Started</a>
+          <a href="{% url 'login' %}" class="btn btn-outline-success btn-lg shadow">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="fw-bold text-success">📦 Stock Management</h5>
+              <p class="text-muted">Track tea stock levels in real-time across all distribution points.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="fw-bold text-success">👥 Agent Oversight</h5>
+              <p class="text-muted">Assign agents to managers and monitor performance efficiently.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="fw-bold text-success">📊 Analytics</h5>
+              <p class="text-muted">Gain insights with detailed sales and distribution reports.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-3 bg-success text-white text-center">
+    <p class="mb-0">&copy; 2025 Tamarta HQ | Tea Distribution Management System</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

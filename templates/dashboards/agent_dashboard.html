@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard agent">
+  <h2>Agent Dashboard</h2>
+  <p>Welcome, {{ user.username }}. Track your sales, stock, and customers here.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>My Sales</h3>
+      <p>View and update your daily tea sales.</p>
+      <a href="#">Go to Sales</a>
+    </div>
+
+    <div class="card">
+      <h3>Stock Requests</h3>
+      <p>Request additional tea stock from your manager.</p>
+      <a href="#">Request Stock</a>
+    </div>
+
+    <div class="card">
+      <h3>Customer Visits</h3>
+      <p>Log your customer interactions and visits.</p>
+      <a href="#">Record Visit</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
