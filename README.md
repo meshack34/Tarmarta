@@ -1,21 +1,19 @@
-# 🧭 Tour Management System (TMS)
+# 🍵 March Tarmata Tea
 
-A Django-based **Tour Management System (TMS)** that helps tour travel planners manage destination locations like Kisumu, Mombasa, and Nairobi. Users can log in and add detailed information about each location, including visit dates, descriptions, galleries, rooms, restaurants, maps, activities, and more.
+A Django-based **March Tarmata Tea Management System** that helps manage tea production, processing, and distribution workflows. The system enables users to record tea deliveries, manage farmer profiles, track payments, monitor inventory, and generate reports for better transparency and efficiency.
 
 ---
 
 ## 📸 Features
 
-- 🔐 User registration and login system
-- 📍 Destination management (e.g., Kisumu, Mombasa, Nairobi)
-- 🗓️ Date of visit (start - end)
-- 🖼️ Image galleries per destination
-- 🛏️ Room listing with images
-- 🍽️ Restaurant listings
-- 🗺️ Google Maps / embedded maps for each location
-- 🎯 Activities & services tab
-- 🧾 Destination description
-- 🧭 Dashboard with tabbed navigation per destination
+- 🔐 User registration and login system  
+- 👩‍🌾 Farmer profile management  
+- 🌱 Tea delivery recording (with weight and quality grade)  
+- 💰 Payment tracking and farmer statements  
+- 🏭 Processing & inventory management  
+- 📊 Reports & analytics (deliveries, payments, production trends)  
+- 🧾 Tea batch descriptions & traceability  
+- 🧭 Dashboard with tabbed navigation for farmers, staff, and administrators  
 
 ---
 
@@ -25,7 +23,7 @@ A Django-based **Tour Management System (TMS)** that helps tour travel planners 
 |-------------|------------------------|
 | Backend     | Django (Python)        |
 | Frontend    | HTML, CSS, Bootstrap   |
-| Database    | SQLite (default)       |
+| Database    | SQLite (default) / PostgreSQL |
 | Auth        | Django built-in system |
 | Media Files | Django ImageField      |
 
@@ -36,5 +34,5 @@ A Django-based **Tour Management System (TMS)** that helps tour travel planners 
 ### 1. Clone the project
 
 ```bash
-git clone https://github.com/yourusername/tms.git
-cd tms
+git clone https://github.com/yourusername/march-tarmata-tea.git
+cd march-tarmata-tea
