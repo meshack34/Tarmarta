@@ -1,0 +1,49 @@
+/* destinationdetails.css */
+
+.carousel-inner img {
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 180px;
+}
+
+.card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.tab-content {
+  background-color: #fff;
+}
+
+.nav-tabs .nav-link.active {
+  font-weight: bold;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-link {
+  color: #495057;
+}
+
+
+
+.timeline {
+  position: relative;
+  margin-left: 20px;
+  border-left: 2px dashed #0d6efd;
+  padding-left: 20px;
+}
+.timeline-item {
+  position: relative;
+}
+.timeline-icon {
+  position: absolute;
+  left: -20px;
+  top: 0;
+}

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top" style="background-color: #004d80;">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
+      <i class="bi bi-compass"></i> Nomad TMS
+    </a>
+
+    <!-- Sidebar Toggle (mobile only) -->
+    <button class="btn btn-outline-light d-md-none me-2" type="button"
+            data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+            aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Right side auth -->
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        {% if request.user.is_authenticated %}
+        <!-- Logout button: lighter dark blue -->
+        <a class="btn fw-bold text-white" href="{% url 'logout' %}" 
+           style="background-color: #0d6efd; border: 1px solid #336699;">
+          Logout
+        </a>
+        {% else %}
+        <a class="btn btn-outline-light fw-bold" href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Add spacing so content doesn’t hide behind navbar -->
+<div style="padding-top: 70px;"></div>

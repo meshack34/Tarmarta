@@ -1,0 +1,39 @@
+{% extends "base_dashboard.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Outlets</h2>
+    <a href="{% url 'outlet_add' %}" class="btn btn-success">+ Add Outlet</a>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Market</th>
+        <th>Owner</th>
+        <th>Phone</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for outlet in outlets %}
+      <tr>
+        <td>{{ outlet.name }}</td>
+        <td>{{ outlet.market.name }}</td>
+        <td>{{ outlet.owner_name|default:"—" }}</td>
+        <td>{{ outlet.contact_phone|default:"—" }}</td>
+        <td>{{ outlet.location|default:"—" }}</td>
+        <td>
+          <a href="{% url 'outlet_edit' outlet.id %}" class="btn btn-sm btn-primary">Edit</a>
+          <a href="{% url 'outlet_delete' outlet.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6" class="text-muted">No outlets defined</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

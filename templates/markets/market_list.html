@@ -1,0 +1,37 @@
+{% extends "base_dashboard.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Markets</h2>
+    <a href="{% url 'market_add' %}" class="btn btn-success">+ Add Market</a>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Region</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for market in markets %}
+      <tr>
+        <td>{{ market.name }}</td>
+        <td>{{ market.region }}</td>
+        <td>{{ market.get_type_display }}</td>
+        <td>{{ market.status|yesno:"Active,Inactive" }}</td>
+        <td>
+          <a href="{% url 'market_edit' market.id %}" class="btn btn-sm btn-primary">Edit</a>
+          <a href="{% url 'market_delete' market.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-muted">No markets defined</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

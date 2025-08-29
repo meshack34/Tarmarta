@@ -1,0 +1,12 @@
+/* static/css/base.css */
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f9fafb; /* light background */
+}
+
+.main-content {
+    margin-left: 240px; /* same width as sidebar */
+    padding: 30px;
+}

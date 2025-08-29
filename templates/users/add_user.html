@@ -1,0 +1,42 @@
+{% extends "base_dashboard.html" %}
+{% block title %}Add User{% endblock %}
+
+{% block content %}
+<div class="container p-4">
+  <h2 class="fw-bold mb-4 text-success"><i class="bi bi-person-plus"></i> Add User</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Phone</label>
+      <input type="text" name="phone" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      <select name="role" class="form-select" required>
+        <option value="manager">Manager</option>
+        <option value="agent">Agent</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Create User</button>
+    <a href="{% url 'user_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

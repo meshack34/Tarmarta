@@ -1,0 +1,19 @@
+{% extends "agent/base_agent.html" %}
+
+{% block agent_content %}
+<div class="card shadow-sm">
+  <div class="card-header bg-success text-white">
+    <h5>Sale #{{ sale.id }}</h5>
+  </div>
+  <div class="card-body">
+    <p><strong>Market:</strong> {{ sale.market.name }}</p>
+    <p><strong>Product:</strong> {{ sale.pack.product.name }} ({{ sale.pack.label }})</p>
+    <p><strong>Quantity:</strong> {{ sale.quantity }}</p>
+    <p><strong>Total Revenue:</strong> <span class="text-success fw-bold">{{ sale.revenue }}</span></p>
+    <p><strong>Timestamp:</strong> {{ sale.timestamp }}</p>
+  </div>
+  <div class="card-footer">
+    <a href="{% url 'agent:sale_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+  </div>
+</div>
+{% endblock %}

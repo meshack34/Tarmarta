@@ -1,0 +1,118 @@
+.gallery-carousel img {
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.nav-tabs .nav-link {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #555;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #63b54e;
+  border-color: #63b54e;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #333;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+
+/* style.css - for destination_detail.html and base.html */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #343a40;
+    background-color: #f9f9fb;
+}
+
+.container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Tabs */
+.nav-tabs .nav-link {
+    color: #555;
+    border: none;
+    border-radius: 0;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    color: #fff;
+    background-color: #28a745;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* Cards (Rooms, Restaurants) */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Carousel */
+.carousel-inner img {
+    height: 500px;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: #6c757d;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+/* Info Blocks */
+.bg-light {
+    background-color: #eef1f5 !important;
+    border-left: 5px solid #28a745;
+}
+
+/* Section Headers */
+h4, h5 {
+    font-weight: 600;
+    color: #2f2f2f;
+}
+
+/* Your Stay icon */
+.bi-people-fill {
+    font-size: 1.8rem;
+}
+
+/* Responsive Map */
+.ratio iframe {
+    border-radius: 0.75rem;
+}
+
+/* Footer spacing */
+footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}

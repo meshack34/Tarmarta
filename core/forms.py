@@ -1,46 +1,30 @@
-# core/forms.py
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import User, Role
+from core.models import Product, PackSize, PriceList, Market, Outlet
 
-
-class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    role = forms.ChoiceField(
-        choices=Role.choices,
-        widget=forms.Select(attrs={"class": "form-control"})
-    )
-    manager = forms.ModelChoiceField(
-        queryset=User.objects.filter(role=Role.MANAGER),
-        required=False,
-        help_text="Assign a manager if you are registering an Agent.",
-        widget=forms.Select(attrs={"class": "form-control"})
-    )
-
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = [
-            "username",
-            "email",
-            "phone",
-            "role",
-            "manager",
-            "password1",
-            "password2",
-        ]
+        model = Product
+        fields = ["name", "category", "description", "is_active", "sku"]
 
-    def clean(self):
-        """Extra validation logic."""
-        cleaned_data = super().clean()
-        role = cleaned_data.get("role")
-        manager = cleaned_data.get("manager")
 
-        # If role is agent, manager must be chosen
-        if role == Role.AGENT and not manager:
-            self.add_error("manager", "Agents must be assigned to a manager.")
+class PackSizeForm(forms.ModelForm):
+    class Meta:
+        model = PackSize
+        fields = ["label", "packaging_type", "unit", "sku", "is_active"]
 
-        # Managers and Admins cannot have managers
-        if role in [Role.MANAGER, Role.ADMIN] and manager:
-            self.add_error("manager", "Only Agents can be assigned a manager.")
 
-        return cleaned_data
+class PriceListForm(forms.ModelForm):
+    class Meta:
+        model = PriceList
+        fields = ["pack", "market", "unit_price", "tax_rate", "discount_policy", "effective_from", "effective_to", "status"]
+
+class MarketForm(forms.ModelForm):
+    class Meta:
+        model = Market
+        fields = ["name", "region", "type", "gps_lat", "gps_long", "status"]
+
+
+class OutletForm(forms.ModelForm):
+    class Meta:
+        model = Outlet
+        fields = ["market", "name", "owner_name", "contact_phone", "location", "descriptor"]

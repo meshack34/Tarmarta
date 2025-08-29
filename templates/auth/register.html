@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TTDMS</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo and System Name -->
+            <div class="auth-header">
+                <img src="{% static 'images/logo.png' %}" alt="TTDMS Logo" class="logo">
+                <h2 class="system-name">Tea Distribution Management System (TTDMS)</h2>
+            </div>
+
+            <!-- Registration Form -->
+            <form method="POST" novalidate>
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.phone.id_for_label }}">Phone</label>
+                    {{ form.phone }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.role.id_for_label }}">Role</label>
+                    {{ form.role }}
+                </div>
+                <div class="form-group" id="manager-field">
+                    <label for="{{ form.manager.id_for_label }}">Assign Manager</label>
+                    {{ form.manager }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+
+                <button type="submit" class="btn-login">Register</button>
+            </form>
+
+            <!-- Extra Links -->
+            <div class="auth-footer">
+                <span>Already have an account? <a href="{% url 'login' %}">Login</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Small JS to toggle Manager field -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const roleSelect = document.querySelector("select[name='role']");
+            const managerField = document.getElementById("manager-field");
+
+            function toggleManagerField() {
+                const value = roleSelect.value.toUpperCase(); // normalize
+                if (value === "AGENT") {
+                    managerField.style.display = "block";
+                } else {
+                    // hide and clear manager selection
+                    managerField.style.display = "none";
+                    const select = managerField.querySelector("select");
+                    if (select) select.value = "";
+                }
+            }
+
+            toggleManagerField(); // Run once on load
+            roleSelect.addEventListener("change", toggleManagerField); // Run on change
+        });
+    </script>
+</body>
+</html>

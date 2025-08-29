@@ -1,0 +1,47 @@
+<ul class="nav nav-pills flex-column mb-auto">
+  <!-- Dashboard -->
+  <li class="nav-item mb-2">
+    <a href="{% url 'admin_dashboard' %}" 
+       class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active bg-light text-dark{% else %}text-white{% endif %}">
+      <i class="bi bi-speedometer2 me-2"></i> Dashboard
+    </a>
+  </li>
+
+  <!-- User Management -->
+  <li class="mb-2">
+    <a class="nav-link text-white d-flex justify-content-between align-items-center rounded"
+       data-bs-toggle="collapse" href="#userMenu" role="button">
+      <span><i class="bi bi-people me-2"></i> Users</span>
+      <i class="bi bi-caret-down-fill small"></i>
+    </a>
+    <div class="collapse ps-3 mt-2" id="userMenu">
+      <a href="#" class="nav-link text-white-50 small mb-1">
+        <i class="bi bi-list-task me-1"></i> All Users
+      </a>
+      <a href="{% url 'add_user' %}" class="nav-link text-white-50 small">
+        <i class="bi bi-person-plus me-1"></i> Add User
+      </a>
+    </div>
+  </li>
+
+  <!-- Reports -->
+  <li>
+    <a href="#" class="nav-link text-white">
+      <i class="bi bi-file-earmark-text me-2"></i> Reports
+    </a>
+  </li>
+
+  <!-- Profile -->
+  <li>
+    <a href="#" class="nav-link text-white">
+      <i class="bi bi-person me-2"></i> Profile
+    </a>
+  </li>
+
+  <!-- Logout -->
+  <li>
+    <a href="{% url 'logout' %}" class="nav-link text-white">
+      <i class="bi bi-box-arrow-right me-2"></i> Logout
+    </a>
+  </li>
+</ul>

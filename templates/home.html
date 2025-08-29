@@ -1,89 +1,210 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tamarta Tea Distribution Management System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body class="bg-light">
+{% extends "main.html" %}
+{% block content %}
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="{% url 'home' %}">TTDMS</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'role_redirect' %}">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-          {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
-          {% endif %}
-        </ul>
-      </div>
+<style>
+body { 
+  font-family: Verdana, sans-serif; 
+  background-color: #f4faf7; 
+  color: #333; 
+  line-height:1.8; 
+  font-size:16px; 
+  margin:0; 
+  padding:0; 
+}
+h1,h2,h3 { margin:0; }
+h1 { font-size:48px; color:#004d40; }
+h2 { color:#004d40; font-size:38px; font-weight:bold; margin-bottom:20px; }
+p { color:#333; line-height:1.8; }
+a { text-decoration:none; }
+
+/* Hero Section */
+#home {
+  background: linear-gradient(rgba(244,250,247,0.85), rgba(244,250,247,0.85)),
+              url('https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=1600&q=80') 
+              no-repeat center center/cover;
+  min-height: 75vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:0 20px;
+}
+#home p { font-size:22px; max-width:700px; margin-bottom:30px; }
+#home a {
+  background:#ffffff; 
+  color:#004d40; 
+  padding:14px 30px; 
+  border-radius:8px; 
+  border:1px solid #004d40; 
+  font-size:18px; 
+  transition: all 0.3s ease;
+}
+#home a:hover { background:#004d40; color:#fff; }
+
+/* Features Section */
+#features { background:#e9f5f2; padding:80px 30px; text-align:center; }
+#features p { max-width:700px; margin:0 auto 40px auto; font-size:18px; }
+.features-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:30px; margin-top:40px; }
+.feature-card { 
+  background:#fff; 
+  border-radius:16px; 
+  padding:30px 20px; 
+  box-shadow:0 6px 18px rgba(0,0,0,0.08); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  text-align:center; 
+}
+.feature-card:hover { transform:translateY(-10px); box-shadow:0 12px 28px rgba(0,0,0,0.12); }
+.feature-card i { font-size:36px; color:#004d40; margin-bottom:15px; }
+.feature-card h3 { font-size:20px; margin-bottom:10px; }
+.feature-card p { font-size:16px; line-height:1.6; }
+
+/* Testimonials Section */
+#testimonials { padding:80px 20px; background:#fff; text-align:center; position:relative; }
+#testimonials h2 { margin-bottom:50px; }
+
+.testimonial-carousel-container { position: relative; max-width:960px; margin:0 auto; overflow:hidden; }
+.testimonial-wrapper { display:flex; transition: transform 0.5s ease; }
+.testimonial-card {
+  min-width:33.3333%;
+  margin:0 10px;
+  background:#f9f9f9;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  padding:20px;
+  text-align:center;
+  opacity:0.5;
+  transform: scale(0.9);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.testimonial-card.center { transform: scale(1.05); opacity:1; z-index:2; }
+.testimonial-card.left, .testimonial-card.right { opacity:0.7; transform: scale(0.95); z-index:1; }
+.testimonial-card img { width:60px; height:60px; border-radius:50%; object-fit:cover; margin-bottom:10px; }
+.testimonial-card strong { color:#004d40; display:block; margin-bottom:2px; }
+.testimonial-card span { font-size:14px; color:#666; }
+.testimonial-card p { font-size:18px; margin-bottom:20px; }
+
+/* Carousel arrows */
+.carousel-btn {
+  background: rgba(0, 77, 64, 0.8);
+  border-radius: 50%;
+  border: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.carousel-btn:hover { background: #004d40; }
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+@media(max-width:768px){
+  #home h1 { font-size:34px; }
+  #home p { font-size:18px; }
+  .testimonial-card { min-width:80%; }
+  .carousel-btn.prev { left: 5px; }
+  .carousel-btn.next { right: 5px; }
+}
+</style>
+
+<main>
+<!-- Hero Section -->
+<section id="home">
+  <h1>Empowering Tea Distribution in Africa</h1>
+  <p>With <strong>TTDMS</strong>, streamline your tea distribution — track sales, manage agents, and grow your market reach with ease.</p>
+  <a href="{% url 'login'%}">Get Started</a>
+</section>
+
+<!-- Features Section -->
+<section id="features">
+  <h2>Why Choose TTDMS?</h2>
+  <p>Our Tea Distribution Management System is designed for efficiency, accountability, and growth. Whether you’re an Agent, Manager, or Admin — TTDMS keeps everyone connected and informed.</p>
+  <div class="features-grid">
+    <div class="feature-card"><i class="bi bi-bar-chart-line"></i><h3>Track Sales</h3><p>Monitor daily sales, visits, and market activities in real time.</p></div>
+    <div class="feature-card"><i class="bi bi-people"></i><h3>Agent Management</h3><p>Assign, supervise, and support distribution agents effectively.</p></div>
+    <div class="feature-card"><i class="bi bi-shop"></i><h3>Market Insights</h3><p>Understand which regions, outlets, and products drive growth.</p></div>
+    <div class="feature-card"><i class="bi bi-shield-check"></i><h3>Accountability</h3><p>Ensure accuracy and trust through digital reporting & audit trails.</p></div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials">
+  <h2>What Our Partners Say</h2>
+  <div class="testimonial-carousel-container">
+    <button class="carousel-btn prev">&#10094;</button>
+    <div class="testimonial-wrapper">
+      <div class="testimonial-card"><img src="https://randomuser.me/api/portraits/men/75.jpg"><p>"TTDMS helped us track every tea delivery and improve efficiency."</p><strong>Joseph Mwangi</strong><span>Distribution Agent</span></div>
+      <div class="testimonial-card"><img src="https://randomuser.me/api/portraits/women/65.jpg"><p>"I can now see real-time reports from all agents — saves me hours."</p><strong>Grace Njeri</strong><span>Regional Manager</span></div>
+      <div class="testimonial-card"><img src="https://randomuser.me/api/portraits/men/32.jpg"><p>"With TTDMS, our sales doubled because we know where to focus."</p><strong>Samuel Otieno</strong><span>Tea Wholesaler</span></div>
+      <div class="testimonial-card"><img src="https://randomuser.me/api/portraits/women/42.jpg"><p>"The accountability and transparency is unmatched — we trust the numbers."</p><strong>Fatma Ali</strong><span>Finance Officer</span></div>
+      <div class="testimonial-card"><img src="https://randomuser.me/api/portraits/men/56.jpg"><p>"No more paperwork chaos — everything is digital and secure."</p><strong>David Kimani</strong><span>Admin</span></div>
     </div>
-  </nav>
+    <button class="carousel-btn next">&#10095;</button>
+  </div>
+</section>
+</main>
 
-  <!-- Hero Section -->
-  <section class="py-5 text-center bg-white">
-    <div class="container">
-      <h1 class="fw-bold text-success">Tamarta Tea Distribution</h1>
-      <p class="lead text-muted">Efficiently manage tea stock, sales, and distribution across markets.</p>
-      <div class="mt-4">
-        {% if user.is_authenticated %}
-          <a href="{% url 'role_redirect' %}" class="btn btn-success btn-lg shadow">Go to Dashboard</a>
-        {% else %}
-          <a href="{% url 'register' %}" class="btn btn-success btn-lg shadow me-2">Get Started</a>
-          <a href="{% url 'login' %}" class="btn btn-outline-success btn-lg shadow">Login</a>
-        {% endif %}
-      </div>
-    </div>
-  </section>
+<script>
+const wrapper = document.querySelector('.testimonial-wrapper');
+const prevBtn = document.querySelector('.carousel-btn.prev');
+const nextBtn = document.querySelector('.carousel-btn.next');
 
-  <!-- Features Section -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-success">📦 Stock Management</h5>
-              <p class="text-muted">Track tea stock levels in real-time across all distribution points.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-success">👥 Agent Oversight</h5>
-              <p class="text-muted">Assign agents to managers and monitor performance efficiently.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-success">📊 Analytics</h5>
-              <p class="text-muted">Gain insights with detailed sales and distribution reports.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+const autoSlideInterval = 5000;
 
-  <!-- Footer -->
-  <footer class="py-3 bg-success text-white text-center">
-    <p class="mb-0">&copy; 2025 Tamarta HQ | Tea Distribution Management System</p>
-  </footer>
+// Highlight center card
+function updateHighlight() {
+  const cards = Array.from(wrapper.children);
+  cards.forEach(c => c.classList.remove('left','center','right'));
+  cards[0].classList.add('left');
+  cards[1].classList.add('center');
+  cards[2].classList.add('right');
+}
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+function next() {
+  wrapper.appendChild(wrapper.firstElementChild);
+  wrapper.style.transition = 'none';
+  wrapper.style.transform = 'translateX(-33.3333%)';
+  requestAnimationFrame(()=>{
+    wrapper.style.transition = 'transform 0.5s ease';
+    wrapper.style.transform = 'translateX(0)';
+  });
+  updateHighlight();
+}
+
+function prev() {
+  wrapper.insertBefore(wrapper.lastElementChild, wrapper.firstElementChild);
+  wrapper.style.transition = 'none';
+  wrapper.style.transform = 'translateX(-33.3333%)';
+  requestAnimationFrame(()=>{
+    wrapper.style.transition = 'transform 0.5s ease';
+    wrapper.style.transform = 'translateX(0)';
+  });
+  updateHighlight();
+}
+
+nextBtn.addEventListener('click',()=>{ next(); resetAutoSlide(); });
+prevBtn.addEventListener('click',()=>{ prev(); resetAutoSlide(); });
+
+let autoSlide = setInterval(next, autoSlideInterval);
+function resetAutoSlide() { clearInterval(autoSlide); autoSlide = setInterval(next, autoSlideInterval); }
+
+let startX=0,isDragging=false;
+wrapper.addEventListener('touchstart',e=>{startX=e.touches[0].clientX; isDragging=true;});
+wrapper.addEventListener('touchend',e=>{
+  if(!isDragging) return;
+  isDragging=false;
+  let endX = e.changedTouches[0].clientX;
+  if(endX - startX > 50) prev();
+  else if(startX - endX > 50) next();
+});
+
+updateHighlight();
+</script>
+
+{% endblock %}

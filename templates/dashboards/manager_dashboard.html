@@ -1,34 +1,41 @@
-{% extends "base.html" %}
+{% extends "base_dashboard.html" %}
+{% block title %}Manager Dashboard{% endblock %}
 
 {% block content %}
-<div class="dashboard manager">
-  <h2>Manager Dashboard</h2>
-  <p>Welcome, {{ user.username }}. Manage your team and monitor performance.</p>
+<div class="container-fluid p-4">
 
-  <div class="cards">
-    <div class="card">
-      <h3>Team Performance</h3>
-      <p>View sales reports and productivity of your assigned agents.</p>
-      <a href="#">View Reports</a>
+  <h2 class="mb-4 fw-bold text-primary"><i class="bi bi-briefcase me-2"></i> Manager Dashboard</h2>
+
+  <div class="row g-4 mb-4">
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 p-3 text-center">
+        <i class="bi bi-people fs-1 text-primary"></i>
+        <h5 class="mt-2">My Agents</h5>
+        <p class="fs-4 fw-bold">{{ stats.my_agents }}</p>
+      </div>
     </div>
-
-    <div class="card">
-      <h3>Assign Stock</h3>
-      <p>Distribute tea stock to agents under your supervision.</p>
-      <a href="#">Distribute Stock</a>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 p-3 text-center">
+        <i class="bi bi-shop fs-1 text-success"></i>
+        <h5 class="mt-2">Team Visits</h5>
+        <p class="fs-4 fw-bold">{{ stats.team_visits }}</p>
+      </div>
     </div>
-
-    <div class="card">
-      <h3>Team Members</h3>
-      <p>Manage your assigned agents.</p>
-      <ul>
-        {% for member in team %}
-          <li>{{ member.username }} ({{ member.role }})</li>
-        {% empty %}
-          <li>No agents assigned yet.</li>
-        {% endfor %}
-      </ul>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 p-3 text-center">
+        <i class="bi bi-currency-dollar fs-1 text-warning"></i>
+        <h5 class="mt-2">Team Sales</h5>
+        <p class="fs-4 fw-bold">{{ stats.team_sales }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 p-3 text-center">
+        <i class="bi bi-arrow-counterclockwise fs-1 text-danger"></i>
+        <h5 class="mt-2">Team Returns</h5>
+        <p class="fs-4 fw-bold">{{ stats.team_returns }}</p>
+      </div>
     </div>
   </div>
+
 </div>
 {% endblock %}

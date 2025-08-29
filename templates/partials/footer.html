@@ -1,0 +1,112 @@
+{% load static %}
+
+<footer class="footer" id="contact">
+    <div class="footer-grid">
+        <!-- About -->
+        <div>
+            <h5>About TTDMS</h5>
+            <p>Tamarta Tea Distribution Management System helps streamline tea distribution by empowering agents, managers, and administrators with real-time tools and insights.</p>
+        </div>
+
+        <!-- Support -->
+        <div>
+            <h5>Support</h5>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div>
+            <h5>Follow Us</h5>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+        </div>
+    </div>
+    <p class="text-center mt-3">&copy; 2025 Tamarta Tea Distribution Management System. All rights reserved.</p>
+</footer>
+
+<style>
+/* ======================
+   FOOTER STYLES
+   ====================== */
+.footer {
+  background-color: #004d40; /* Deep tea green */
+  color: #e0f2f1;
+  padding: 40px 20px 20px;
+  margin-top: 40px;
+}
+
+.footer h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #a5d6a7; /* light green accent */
+}
+
+.footer p {
+  font-size: 0.9rem;
+  color: #cfd8dc;
+  margin-bottom: 10px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer ul li {
+  margin-bottom: 8px;
+}
+
+.footer ul li a {
+  color: #cfd8dc;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer ul li a:hover {
+  color: #ffffff;
+}
+
+/* Footer Grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+/* Social Icons */
+.footer .bi {
+  font-size: 1.3rem;
+  margin-right: 12px;
+  color: #cfd8dc;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer .bi:hover {
+  color: #ffffff;
+}
+
+/* Bottom note */
+.footer p.text-center {
+  font-size: 0.85rem;
+  margin-top: 15px;
+  color: #b2dfdb;
+  border-top: 1px solid #00695c;
+  padding-top: 10px;
+}
+
+/* ======================
+   RESPONSIVE
+   ====================== */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

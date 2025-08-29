@@ -1,87 +1,141 @@
+# core/views.py
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from django.db.models import Count
 
-from .models import User
-from .forms import UserRegistrationForm
+from core.models import User, Role, Visit, Sale, Return, Transfer, Payment
 
 
+# -------------------
+# General
+# -------------------
 def home(request):
     """Landing page (before login)."""
     return render(request, "home.html")
 
 
-def register(request):
-    """User signup form."""
+def login_view(request):
+    """Custom login with role-based redirection."""
     if request.method == "POST":
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # auto login after registration
-            messages.success(request, "Account created successfully!")
-            return redirect("role_redirect")
-    else:
-        form = UserRegistrationForm()
-    return render(request, "registration/register.html", {"form": form})
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
 
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Welcome back {user.username}!")
 
-def user_login(request):
-    """Custom login view with role redirect."""
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("role_redirect")
+            if user.role == Role.ADMIN:
+                return redirect("admin_dashboard")
+            elif user.role == Role.MANAGER:
+                return redirect("manager_dashboard")
+            elif user.role == Role.AGENT:
+                return redirect("agent_dashboard")
             else:
-                messages.error(request, "Invalid username or password")
+                messages.error(request, "Your role is not recognized.")
+                return redirect("login")
         else:
             messages.error(request, "Invalid username or password")
-    else:
-        form = AuthenticationForm()
-    return render(request, "registration/login.html", {"form": form})
+            return redirect("login")
+
+    return render(request, "auth/login.html")
 
 
 @login_required
-def user_logout(request):
-    """Logout view."""
+def logout_view(request):
+    """Logout user."""
     logout(request)
-    messages.success(request, "You have been logged out successfully.")
-    return redirect("home")
+    messages.info(request, "You have been logged out successfully.")
+    return redirect("login")
+
 
 @login_required
-def role_redirect(request):
-    """Redirect users after login to correct dashboard."""
-    if request.user.role == "admin":
+def dashboard(request):
+    """Redirect users to their dashboard by role."""
+    if request.user.role == Role.ADMIN:
         return redirect("admin_dashboard")
-    elif request.user.role == "manager":
+    elif request.user.role == Role.MANAGER:
         return redirect("manager_dashboard")
-    else:
+    elif request.user.role == Role.AGENT:
         return redirect("agent_dashboard")
+    else:
+        messages.error(request, "No dashboard available for your role.")
+        return redirect("home")
 
 
+# -------------------
+# Dashboards
+# -------------------
 @login_required
-def agent_dashboard(request):
-    """Dashboard for Agents."""
-    return render(request, "dashboards/agent_dashboard.html")
+def admin_dashboard(request):
+    if request.user.role != Role.ADMIN:
+        messages.error(request, "Unauthorized access.")
+        return redirect("home")
+
+    stats = {
+        "total_users": User.objects.count(),
+        "total_agents": User.objects.filter(role=Role.AGENT).count(),
+        "total_managers": User.objects.filter(role=Role.MANAGER).count(),
+        "total_visits": Visit.objects.count(),
+        "total_sales": Sale.objects.count(),
+        "total_returns": Return.objects.count(),
+    }
+    return render(request, "dashboards/admin_dashboard.html", {"stats": stats})
 
 
 @login_required
 def manager_dashboard(request):
-    """Dashboard for Managers (with team list)."""
-    team = User.objects.filter(manager=request.user)
-    return render(request, "dashboards/manager_dashboard.html", {"team": team})
+    return render(request, "dashboards/manager_dashboard.html")
 
 
 @login_required
-def admin_dashboard(request):
-    """Dashboard for Admins (manage users)."""
-    users = User.objects.all()
-    return render(request, "dashboards/admin_dashboard.html", {"users": users})
+def agent_dashboard(request):
+    return render(request, "dashboards/agent_dashboard.html")
+
+
+# -------------------
+# User Management (Admin Only)
+# -------------------
+@login_required
+def add_user(request):
+    """Admin can add Managers or Agents."""
+    if request.user.role != Role.ADMIN:
+        messages.error(request, "You don’t have permission to add users.")
+        return redirect("dashboard")
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        role = request.POST.get("role")
+        password = request.POST.get("password")
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken.")
+            return redirect("add_user")
+
+        user = User.objects.create(
+            username=username,
+            email=email,
+            phone=phone,
+            role=role,
+            password=make_password(password),
+        )
+        messages.success(request, f"{role.title()} account for {username} created successfully!")
+        return redirect("user_list")
+
+    return render(request, "users/add_user.html")
+
+
+@login_required
+def user_list(request):
+    """Admin view of all users."""
+    if request.user.role != Role.ADMIN:
+        messages.error(request, "Unauthorized access.")
+        return redirect("dashboard")
+
+    users = User.objects.all().order_by("-date_joined")
+    return render(request, "users/user_list.html", {"users": users})

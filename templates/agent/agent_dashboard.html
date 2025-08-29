@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Agent Dashboard{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Agent Dashboard</h2>
+
+<!-- Summary Cards -->
+<div class="row g-4 mb-4">
+  <div class="col-md-3">
+    <div class="card text-center bg-primary text-white">
+      <div class="card-body">
+        <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+        <h6>Sales Today</h6>
+        <h3>{{ summary.total_sales }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center bg-success text-white">
+      <div class="card-body">
+        <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+        <h6>Revenue</h6>
+        <h3>{{ summary.total_revenue }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="card text-center bg-info text-white">
+      <div class="card-body">
+        <i class="fas fa-store fa-2x mb-2"></i>
+        <h6>Visits</h6>
+        <h3>{{ summary.visits }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="card text-center bg-warning text-dark">
+      <div class="card-body">
+        <i class="fas fa-undo fa-2x mb-2"></i>
+        <h6>Returns</h6>
+        <h3>{{ summary.returns }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="card text-center bg-danger text-white">
+      <div class="card-body">
+        <i class="fas fa-credit-card fa-2x mb-2"></i>
+        <h6>Payments</h6>
+        <h3>{{ summary.payments }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        Recent Sales
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for sale in recent_sales %}
+          <li class="list-group-item">
+            {{ sale.pack }} x{{ sale.quantity }} — {{ sale.revenue }}<br>
+            <small class="text-muted">{{ sale.timestamp }}</small>
+          </li>
+        {% empty %}
+          <li class="list-group-item">No sales today.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Recent Visits
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for v in recent_visits %}
+          <li class="list-group-item">
+            {{ v.market }} {% if v.outlet %}/ {{ v.outlet }}{% endif %}<br>
+            <small class="text-muted">{{ v.datetime }}</small>
+          </li>
+        {% empty %}
+          <li class="list-group-item">No visits today.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header bg-warning text-dark">
+        Recent Returns
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for r in recent_returns %}
+          <li class="list-group-item">
+            {{ r.pack }} x{{ r.quantity }} — {{ r.reason_code }}<br>
+            <small class="text-muted">{{ r.created_at }}</small>
+          </li>
+        {% empty %}
+          <li class="list-group-item">No returns today.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

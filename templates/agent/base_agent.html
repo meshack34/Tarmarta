@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="bg-dark text-light p-3 vh-100" style="width: 220px;">
+    <h4 class="text-white mb-4">Agent Panel</h4>
+    <nav class="nav flex-column">
+      <a class="nav-link text-light" href="{% url 'agent-dashboard' %}">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a class="nav-link text-light" href="{% url 'visits-list' %}">
+        <i class="fas fa-store"></i> Visits
+      </a>
+      <a class="nav-link text-light" href="{% url 'sales-list' %}">
+        <i class="fas fa-shopping-cart"></i> Sales
+      </a>
+      <a class="nav-link text-light" href="{% url 'returns-list' %}">
+        <i class="fas fa-undo"></i> Returns
+      </a>
+      <a class="nav-link text-light" href="{% url 'transfers-list' %}">
+        <i class="fas fa-random"></i> Transfers
+      </a>
+      <a class="nav-link text-light" href="{% url 'payments-list' %}">
+        <i class="fas fa-credit-card"></i> Payments
+      </a>
+      <a class="nav-link text-light" href="{% url 'reports-list' %}">
+        <i class="fas fa-chart-line"></i> Reports
+      </a>
+    </nav>
+    <hr class="border-light">
+    <a class="nav-link text-light" href="{% url 'logout' %}">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-grow-1 p-4">
+    {% block agent_content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}
